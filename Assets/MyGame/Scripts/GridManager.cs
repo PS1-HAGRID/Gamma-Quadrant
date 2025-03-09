@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour, iCargoGrid
 {
-    Dictionary<Cargo, int> _ShippingManifest;
+    HashSet<Cargo> _ShippingManifest;
+    int[,] _PhysicalizedGrid;
 
     [Header("Grid Variables")]
     [SerializeField] int2 _GridResolution = new int2(1,1);
 
+    [SerializeField] GameObject _CargoPrefab;
     [SerializeField] Material _GridMaterial;
 
     private int GridSize;
@@ -30,7 +32,16 @@ public class GridManager : MonoBehaviour, iCargoGrid
 
     private void InitializeGrid()
     {
-
+        _PhysicalizedGrid = new int[_GridResolution.x, _GridResolution.y];
+        for (int i = 0; i < _PhysicalizedGrid.GetLength(0); i++) 
+        { 
+            for(int j = 0; j < _PhysicalizedGrid.GetLength(1); j++)
+            {
+                GameObject lCurrentCargo = Instantiate(_CargoPrefab, transform);
+                lCurrentCargo.transform.position = new Vector3(i, j, 0);
+                lCurrentCargo.transform.localScale = transform.localScale * 0.01f;
+            }
+        }
     }
 
     public int EvaluateCargoGridSize()
@@ -40,7 +51,7 @@ public class GridManager : MonoBehaviour, iCargoGrid
 
     public Cargo AddCargo(Cargo pCargoToAdd)
     {
-        _ShippingManifest.Add(pCargoToAdd, 0);
+        _ShippingManifest.Add(pCargoToAdd);
         return pCargoToAdd;
     }
 
@@ -49,5 +60,4 @@ public class GridManager : MonoBehaviour, iCargoGrid
         _ShippingManifest.Remove(pCargoToRemove);
         return pCargoToRemove;
     }
-   
 }
