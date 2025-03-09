@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6666753491415022779}
   - component: {fileID: 3589933960450578336}
   - component: {fileID: 6607414396158327115}
+  - component: {fileID: 1749321424866771074}
   m_Layer: 0
   m_Name: CargoGrid
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710707, y: -0, z: -0, w: 0.7071066}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,3 +107,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1749321424866771074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397664779354759600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20796e6ba8711574dbb6d5be981afbca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GridResolution:
+    x: 1
+    y: 1
+  _GridMaterial: {fileID: 2100000, guid: 090bbe7581124574ba11fa64bab05765, type: 2}
