@@ -1,7 +1,9 @@
+using UnityEngine;
+
 public interface iCargoGrid
 {
-    public Cargo AddCargo(Cargo cargo);
-    public Cargo RemoveCargo(Cargo cargo);
+    public iHaulable AddCargo(iHaulable cargo);
+    public iHaulable RemoveCargo(iHaulable cargo);
 
 
 }

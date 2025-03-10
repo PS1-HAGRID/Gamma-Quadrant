@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour, iCargoGrid
 {
-    HashSet<Cargo> _ShippingManifest;
-    int[,] _PhysicalizedGrid;
+    HashSet<iHaulable> _ShippingManifest = new HashSet<iHaulable>();
+    GameObject[,] _PhysicalizedGrid;
 
     [Header("Grid Variables")]
     [SerializeField] int2 _GridResolution = new int2(1,1);
@@ -32,7 +32,7 @@ public class GridManager : MonoBehaviour, iCargoGrid
 
     private void InitializeGrid()
     {
-        _PhysicalizedGrid = new int[_GridResolution.x, _GridResolution.y];
+        _PhysicalizedGrid = new GameObject[_GridResolution.x, _GridResolution.y];
         for (int i = 0; i < _PhysicalizedGrid.GetLength(0); i++) 
         { 
             for(int j = 0; j < _PhysicalizedGrid.GetLength(1); j++)
@@ -40,8 +40,16 @@ public class GridManager : MonoBehaviour, iCargoGrid
                 GameObject lCurrentCargo = Instantiate(_CargoPrefab, transform);
                 lCurrentCargo.transform.position = new Vector3(i, j, 0);
                 lCurrentCargo.transform.localScale = transform.localScale * 0.01f;
+                _PhysicalizedGrid[i, j] = lCurrentCargo;
+
+                AddCargo(lCurrentCargo.GetComponent<iHaulable>());
             }
         }
+
+        GameObject lCargoToRemove = _PhysicalizedGrid[1, 4];
+        RemoveCargo(lCargoToRemove.GetComponent<iHaulable>());
+        _PhysicalizedGrid[1, 4] = null;
+        Destroy(lCargoToRemove);
     }
 
     public int EvaluateCargoGridSize()
@@ -49,13 +57,13 @@ public class GridManager : MonoBehaviour, iCargoGrid
         return _GridResolution.x * _GridResolution.y;
     }
 
-    public Cargo AddCargo(Cargo pCargoToAdd)
+    public iHaulable AddCargo(iHaulable pCargoToAdd)
     {
         _ShippingManifest.Add(pCargoToAdd);
         return pCargoToAdd;
     }
 
-    public Cargo RemoveCargo(Cargo pCargoToRemove)
+    public iHaulable RemoveCargo(iHaulable pCargoToRemove)
     {
         _ShippingManifest.Remove(pCargoToRemove);
         return pCargoToRemove;
